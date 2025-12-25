@@ -1,0 +1,96 @@
+/* Container that holds all sections and enforces full-page snapping */
+.snap-container{
+  height:100vh;
+  overflow-y:auto;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 0;
+  scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-section{
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8rem 2rem 12rem 6rem;
+}
+
+/* Title page */
+.title-card{
+  max-width:var(--max-width);
+  text-align:center;
+}
+.title-card h1{
+  margin:0 0 .5rem 0;
+  font-size:clamp(2rem,4.5vw,4rem);
+  font-family: 'EB Garamond', serif;
+  font-weight:700;
+}
+.title-card p{margin:0;font-size:1.05rem}
+.title-card p strong{font-family:'EB Garamond',serif;font-weight:700}
+
+/* Poem layout */
+.poem-frame{
+  width:100%;
+  max-width:var(--max-width);
+  display:grid;
+  gap:2.5rem;
+}
+
+/* When illustration exists: side-by-side 50/50 with text on left, illustration on right */
+.with-illustration{
+  grid-template-columns:1fr 1fr;
+  align-items:start;
+}
+
+/* When no illustration: two column layout that spans the full width (columns centered on the middle gutter) */
+.text-only{
+  grid-template-columns:1fr 1fr;
+}
+/* Text naturally flows into grid cells for 50-50 split */
+.text-only .poem-text{ width:100%; }
+
+.illustration{
+  height:450px;
+  width:auto;
+  object-fit:contain;
+}
+
+.poem-text{
+  font-family: 'EB Garamond', serif;
+  font-weight:300;
+  font-size:1.15rem;
+  line-height:1.85; /* default line-height (used by foreword) */
+  color:var(--poem-color);
+}
+
+/* For text-only pages: single column display in grid cells */
+.poem-text{
+  line-height:2.2; /* taller lines for easier reading in spreads */
+}
+
+.poem-frame h2{ font-family: 'EB Garamond', serif; font-weight:700; margin:0 0 1rem 0 }
+
+/* Foreword: single chunk, single column with original line-height */
+.poem-text.foreword{ column-count:1; line-height:1.85; max-width:70ch; margin:0 auto }
+
+/* Page notes */
+.page-number{opacity:.5;font-size:.9rem;margin-top:1.25rem}
+
+/* responsive */
+@media (max-width:900px){
+  .with-illustration,.text-only{grid-template-columns:1fr}
+  .poem-text.columns{column-count:1}
+}
+
+/* On very wide screens, ensure two columns display side-by-side */
+@media (min-width:1200px){
+  .poem-text{
+    /* text naturally fills 50% of grid in text-only layout */
+  }
+}
+/* small niceties */
+.snap-section{background:var(--bg)}
